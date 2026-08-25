@@ -47,6 +47,8 @@ jobs:
       
   lint:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix:
         linter: [flake8, pylint, ruff, mypy]
@@ -64,6 +66,8 @@ jobs:
 
   security-scan:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
 
@@ -81,6 +85,8 @@ jobs:
   docker:
     needs: [build-test, security-scan]
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -97,7 +103,7 @@ jobs:
           tags: student/hostinfo:latest
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: 'student/hostinfo:latest'
           format: 'table'
