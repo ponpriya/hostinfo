@@ -45,6 +45,7 @@ def main():
     parser.add_argument('port', default='9898', type=int, nargs='?',
                         help='an integer for the port')
     args = parser.parse_args()
+    print(f"Webserver starting at {args.port} ")
     run_web_server(args.port)
 
 if __name__ == "__main__":
